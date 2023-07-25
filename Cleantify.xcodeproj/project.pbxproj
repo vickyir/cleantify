@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		334BB6052A6F63910025CA39 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB6042A6F63910025CA39 /* Color+Extension.swift */; };
+		334BB60F2A6F63B80025CA39 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB6072A6F63B80025CA39 /* ProfileView.swift */; };
+		334BB6102A6F63B80025CA39 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB6092A6F63B80025CA39 /* TabBarItem.swift */; };
+		334BB6112A6F63B80025CA39 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60A2A6F63B80025CA39 /* CustomTabBar.swift */; };
+		334BB6122A6F63B80025CA39 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60B2A6F63B80025CA39 /* TabBarButton.swift */; };
+		334BB6132A6F63B80025CA39 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60C2A6F63B80025CA39 /* RootView.swift */; };
+		334BB6142A6F63B80025CA39 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60D2A6F63B80025CA39 /* ActivityView.swift */; };
+		334BB6152A6F63B80025CA39 /* RanksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60E2A6F63B80025CA39 /* RanksView.swift */; };
 		CC9F35642A6D1CC000AB2EC1 /* CleantifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9F35632A6D1CC000AB2EC1 /* CleantifyApp.swift */; };
 		CC9F35662A6D1CC000AB2EC1 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9F35652A6D1CC000AB2EC1 /* StartView.swift */; };
 		CC9F35682A6D1CC000AB2EC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC9F35672A6D1CC000AB2EC1 /* Assets.xcassets */; };
@@ -44,6 +52,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		334BB6042A6F63910025CA39 /* Color+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		334BB6072A6F63B80025CA39 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		334BB6092A6F63B80025CA39 /* TabBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
+		334BB60A2A6F63B80025CA39 /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		334BB60B2A6F63B80025CA39 /* TabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
+		334BB60C2A6F63B80025CA39 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		334BB60D2A6F63B80025CA39 /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		334BB60E2A6F63B80025CA39 /* RanksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RanksView.swift; sourceTree = "<group>"; };
 		CC9F35602A6D1CC000AB2EC1 /* Cleantify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cleantify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9F35632A6D1CC000AB2EC1 /* CleantifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleantifyApp.swift; sourceTree = "<group>"; };
 		CC9F35652A6D1CC000AB2EC1 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -75,6 +91,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		334BB6062A6F63B80025CA39 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				334BB6172A6F63EA0025CA39 /* Activity */,
+				334BB6182A6F63F90025CA39 /* Ranks */,
+				334BB6162A6F63D30025CA39 /* Profile */,
+				334BB6082A6F63B80025CA39 /* Custom Tab Bar */,
+				334BB60C2A6F63B80025CA39 /* RootView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		334BB6082A6F63B80025CA39 /* Custom Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				334BB6092A6F63B80025CA39 /* TabBarItem.swift */,
+				334BB60A2A6F63B80025CA39 /* CustomTabBar.swift */,
+				334BB60B2A6F63B80025CA39 /* TabBarButton.swift */,
+			);
+			path = "Custom Tab Bar";
+			sourceTree = "<group>";
+		};
+		334BB6162A6F63D30025CA39 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				334BB6072A6F63B80025CA39 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		334BB6172A6F63EA0025CA39 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				334BB60D2A6F63B80025CA39 /* ActivityView.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
+		334BB6182A6F63F90025CA39 /* Ranks */ = {
+			isa = PBXGroup;
+			children = (
+				334BB60E2A6F63B80025CA39 /* RanksView.swift */,
+			);
+			path = Ranks;
+			sourceTree = "<group>";
+		};
+		334BB6192A6F642E0025CA39 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				334BB6042A6F63910025CA39 /* Color+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		CC9F35572A6D1CBF00AB2EC1 = {
 			isa = PBXGroup;
 			children = (
@@ -97,7 +167,9 @@
 			isa = PBXGroup;
 			children = (
 				CC9F35632A6D1CC000AB2EC1 /* CleantifyApp.swift */,
+				334BB6192A6F642E0025CA39 /* Extensions */,
 				CC9F35652A6D1CC000AB2EC1 /* StartView.swift */,
+				334BB6062A6F63B80025CA39 /* Views */,
 				CC9F35672A6D1CC000AB2EC1 /* Assets.xcassets */,
 				CC9F35692A6D1CC000AB2EC1 /* Preview Content */,
 			);
@@ -234,7 +306,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				334BB6152A6F63B80025CA39 /* RanksView.swift in Sources */,
+				334BB6132A6F63B80025CA39 /* RootView.swift in Sources */,
+				334BB60F2A6F63B80025CA39 /* ProfileView.swift in Sources */,
 				CC9F35662A6D1CC000AB2EC1 /* StartView.swift in Sources */,
+				334BB6102A6F63B80025CA39 /* TabBarItem.swift in Sources */,
+				334BB6052A6F63910025CA39 /* Color+Extension.swift in Sources */,
+				334BB6142A6F63B80025CA39 /* ActivityView.swift in Sources */,
+				334BB6122A6F63B80025CA39 /* TabBarButton.swift in Sources */,
+				334BB6112A6F63B80025CA39 /* CustomTabBar.swift in Sources */,
 				CC9F35642A6D1CC000AB2EC1 /* CleantifyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
