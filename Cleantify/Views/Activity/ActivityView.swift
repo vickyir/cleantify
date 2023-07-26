@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct Activity: Identifiable {
     let id = UUID()
@@ -16,6 +17,10 @@ struct Activity: Identifiable {
 struct ActivityView: View {
     
     @State private var showSummary = false
+    @State private var workouts: [HKWorkout] = []
+    @State private var filteredWorkouts: [HKWorkout] = []
+    
+    let healthKitManager = HealthKitManager()
     
     let activities = [
         Activity(imageName: "Sapu", points: "900"),
@@ -115,8 +120,14 @@ struct ActivityView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         
                         HStack {
-                            ForEach(activities) { activity in
-                                ActivityListItem(imageName: activity.imageName, points: activity.points)
+                            ForEach(workouts.prefix(3), id: \.uuid) { clean in
+                                
+                                if [.hockey, .golf, .flexibility].contains(clean.workoutActivityType){
+                                    let cleaningName = localizedWorkoutName(for: clean.workoutActivityType)
+                                    ActivityListItem(imageName: cleaningName, points:  String(format: "%.0f", clean.totalDistance?.doubleValue(for: .meter()) ?? 0.0))
+                                }
+                                
+                                
                             }
                             Spacer()
                         }
@@ -167,8 +178,44 @@ struct ActivityView: View {
             }
             .padding(.bottom, 65)
             .navigationBarTitle("Hello Nisa")
+            .onAppear{
+                healthKitManager.requestAuthorization { success, error in
+                    if success {
+                        healthKitManager.getWorkouts { workouts, error in
+                            if let workouts = workouts {
+                                DispatchQueue.main.async {
+                                    // Filter the workouts based on activity types
+                                    self.workouts = workouts
+                                }
+                            }
+                        }
+                    } else if let error = error {
+                        print("Error: \(error.localizedDescription)")
+                    }
+                }
+            }
         }
     }
+    
+    func localizedWorkoutName(for activityType: HKWorkoutActivityType) -> String {
+        switch activityType {
+        case .hockey:
+            return NSLocalizedString("Sweep", comment: "Sweep cleaning activity type")
+        case .golf:
+            return NSLocalizedString("Mop", comment: "Mop cleaning activity type")
+        case .flexibility:
+            return NSLocalizedString("Cleaning Bed", comment: "Cleaning Bed cleaning activity type")
+        default:
+            return NSLocalizedString("Unknown", comment: "Unknown cleaning activity type")
+        }
+    }
+    
+    func durationInMinutes(duration: TimeInterval) -> String {
+        let minutes = Int(duration / 60)
+        let seconds = Int(duration) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+    
 }
 
 struct ActivityListItem: View {
@@ -193,7 +240,7 @@ struct ActivityListItem: View {
                         .font(Font.system(size: 25, weight: .bold, design: .rounded))
                         .foregroundColor(.lightWhite)
                     
-                    Text("pts")
+                    Text("move")
                         .font(Font.system(size: 15, weight: .bold, design: .rounded))
                         .foregroundColor(.lightWhite)
                 }
