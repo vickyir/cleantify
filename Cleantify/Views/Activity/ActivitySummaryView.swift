@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct SummaryActivity: Identifiable {
     let id = UUID()
@@ -34,6 +35,24 @@ struct ActivitySummaryView: View {
         ActivityDetail(imageName: "Sapu", name: "Mopping", totalTime: "09:02:19", totalKcal: "578 KCAL", distance: "115km", avgPace: "16'08\"/km"),
         ActivityDetail(imageName: "Sapu", name: "Sweeping", totalTime: "10:44:08", totalKcal: "768 KCAL", distance: "2.23km", avgPace: "19'12\"/km")
     ]
+    
+    @State private var workouts: [HKWorkout] = []
+    @State private var filteredWorkouts: [HKWorkout] = []
+    let healthKitManager = HealthKitManager()
+    
+    func localizedWorkoutName(for activityType: HKWorkoutActivityType) -> String {
+        switch activityType {
+        case .hockey:
+            return NSLocalizedString("Sweep", comment: "Sweep cleaning activity type")
+        case .golf:
+            return NSLocalizedString("Mop", comment: "Mop cleaning activity type")
+        case .flexibility:
+            return NSLocalizedString("Cleaning Bed", comment: "Cleaning Bed cleaning activity type")
+        default:
+            return NSLocalizedString("Unknown", comment: "Unknown cleaning activity type")
+        }
+    }
+    
     
     var body: some View {
         NavigationView{
@@ -107,14 +126,21 @@ struct ActivitySummaryView: View {
                         .padding(.top, 5)
                         .offset(x:10)
                         
-                        HStack {
-                            ForEach(activities) { activity in
-                                SummaryActivityItemView(imageName: activity.imageName, points: activity.points)
+                        ScrollView(.horizontal, showsIndicators: false){
+                            HStack(spacing: 0.0) {
+                                ForEach(workouts, id: \.uuid) { clean in
+                                    if [.hockey, .golf, .flexibility].contains(clean.workoutActivityType){
+                                        let cleaningName = localizedWorkoutName(for: clean.workoutActivityType)
+                                    
+                                        SummaryActivityItemView(imageName: cleaningName, points: String(format: "%.0f", clean.totalDistance?.doubleValue(for: .meter()) ?? 0.0))
+                                    }
+                                
+                                }
+                                Spacer()
                             }
-                            Spacer()
+
                         }
-                        .padding(.horizontal, 10)
-                        
+                                                
                         VStack(alignment: .leading){
                             Text("Activity Details")
                                 .font(Font.system(size: 20, weight: .bold, design: .rounded))
@@ -127,8 +153,11 @@ struct ActivitySummaryView: View {
                         .offset(x:10)
                         
                         VStack {
-                            ForEach(activitiesdetail) { activity in
-                                ActivityDetailView(activitydetail: activity)
+                            ForEach(workouts, id:\.uuid) { clean in
+                                if [.hockey, .golf, .flexibility].contains(clean.workoutActivityType){
+                                    ActivityDetailView(activitydetail: clean)
+                                }
+                                
                             }
                         }
                         .tint(.softGreen)
@@ -136,6 +165,22 @@ struct ActivitySummaryView: View {
                         
                     }
                     .padding(.horizontal, 10)
+                }
+            }
+            .onAppear{
+                healthKitManager.requestAuthorization { success, error in
+                    if success {
+                        healthKitManager.getWorkouts { workouts, error in
+                            if let workouts = workouts {
+                                DispatchQueue.main.async {
+                                    // Filter the workouts based on activity types
+                                    self.workouts = workouts
+                                }
+                            }
+                        }
+                    } else if let error = error {
+                        print("Error: \(error.localizedDescription)")
+                    }
                 }
             }
             .padding(.bottom, 65)
@@ -163,6 +208,7 @@ struct ActivitySummaryView: View {
 struct SummaryActivityItemView: View {
     var imageName: String
     var points: String
+
     
     var body: some View {
         ZStack {
@@ -182,7 +228,7 @@ struct SummaryActivityItemView: View {
                         .font(Font.system(size: 25, weight: .bold, design: .rounded))
                         .foregroundColor(.lightWhite)
                     
-                    Text("pts")
+                    Text("move")
                         .font(Font.system(size: 15, weight: .bold, design: .rounded))
                         .foregroundColor(.lightWhite)
                 }
@@ -193,7 +239,27 @@ struct SummaryActivityItemView: View {
 }
 
 struct ActivityDetailView: View {
-    var activitydetail: ActivityDetail
+    var activitydetail: HKWorkout
+    
+    func localizedWorkoutName(for activityType: HKWorkoutActivityType) -> String {
+        switch activityType {
+        case .hockey:
+            return NSLocalizedString("Sweep", comment: "Sweep cleaning activity type")
+        case .golf:
+            return NSLocalizedString("Mop", comment: "Mop cleaning activity type")
+        case .flexibility:
+            return NSLocalizedString("Cleaning Bed", comment: "Cleaning Bed cleaning activity type")
+        default:
+            return NSLocalizedString("Unknown", comment: "Unknown cleaning activity type")
+        }
+    }
+    
+    func durationInMinutes(duration: TimeInterval) -> String {
+        let minutes = Int(duration / 60)
+        let seconds = Int(duration) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+    
     
     var body: some View {
         ZStack {
@@ -204,59 +270,44 @@ struct ActivityDetailView: View {
                 .cornerRadius(20)
             
             HStack {
-                Image(activitydetail.imageName)
+                Image(localizedWorkoutName(for: activitydetail.workoutActivityType))
                     .resizable()
                     .scaledToFit()
                     .frame(width: 90, height: 90)
                     .padding(.horizontal)
                 
                 VStack(alignment: .leading) {
-                    Text(activitydetail.name)
+                    Text(localizedWorkoutName(for: activitydetail.workoutActivityType))
                         .font(Font.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundColor(.softGreen)
                     
-                    HStack {
-                        Text("Total Time")
-                            .font(Font.system(size: 15, weight: .bold, design: .rounded))
-                            .foregroundColor(.lightWhite)
-                        Text("Total kilocalories")
-                            .font(Font.system(size: 15, weight: .bold, design: .rounded))
-                            .foregroundColor(.lightWhite)
-                    }
-                    
-                    HStack {
-                        Text(activitydetail.totalTime)
-                            .font(Font.system(size: 15, weight: .bold, design: .rounded))
-                            .foregroundColor(.softGreen)
-                            .padding(.trailing, 7)
-                        
-                        Text(activitydetail.totalKcal)
-                            .font(Font.system(size: 15, weight: .bold, design: .rounded))
-                            .foregroundColor(.softGreen)
-                    }
                     Divider()
                         .frame(height: 2)
                         .overlay(Color.lightWhite)
                     
                     HStack {
-                        Text("Distance")
+                        Text("Time")
                             .font(Font.system(size: 15, weight: .bold, design: .rounded))
                             .foregroundColor(.lightWhite)
                             .padding(.trailing)
-                        Text("Avg. Pace")
+                        Spacer()
+                        Text("Movements")
                             .font(Font.system(size: 15, weight: .bold, design: .rounded))
                             .foregroundColor(.lightWhite)
                     }
                     
                     HStack {
-                        Text(activitydetail.distance)
+                        Text("\(durationInMinutes(duration: activitydetail.duration))")
                             .font(Font.system(size: 15, weight: .bold, design: .rounded))
                             .foregroundColor(.softGreen)
                             .padding(.trailing)
-                        
-                        Text(activitydetail.avgPace)
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                        Text("\(String(format: "%.0f", activitydetail.totalDistance?.doubleValue(for: .meter()) ?? 0.0))")
                             .font(Font.system(size: 15, weight: .bold, design: .rounded))
                             .foregroundColor(.softGreen)
+                        Spacer()
                     }
                     
                 }
@@ -264,7 +315,6 @@ struct ActivityDetailView: View {
             }
         }
         .padding(.leading, 10)
-        .padding(.bottom)
     }
 }
 struct ActivitySummaryView_Previews: PreviewProvider {

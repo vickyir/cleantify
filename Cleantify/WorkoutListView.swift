@@ -35,6 +35,11 @@ struct WorkoutListView: View {
     
     var body: some View {
         NavigationView {
+            ForEach(workouts, id: \.uuid){
+                workouts in
+                let workoutName =  localizedWorkoutName(for: workouts.workoutActivityType)
+                Text("\(workoutName)")
+            }
             List(filteredWorkouts, id: \.uuid) { workout in
                 VStack(alignment: .leading) {
                     
