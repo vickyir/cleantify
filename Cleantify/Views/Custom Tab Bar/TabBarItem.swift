@@ -13,7 +13,7 @@ struct TabBarItem: View {
     @Binding var circleOffset: CGFloat
     
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack{
             if selectedTab == tab {
                 Circle()
                     .foregroundColor(.softGreen)
@@ -33,10 +33,17 @@ struct TabBarItem: View {
             }) {
                 GeometryReader { geo in
                     VStack(alignment: .center, spacing: 4) {
-                        Image(systemName: tab.imageName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 36, height: 36)
+                        if tab.isSFSymbol {
+                            Image(systemName: tab.imageName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 36, height: 36)
+                        } else {
+                            Image(tab.imageName) // Directly use the image name from the asset catalog
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 36, height: 36)
+                        }
                         
                         Text(tab.rawValue)
                             .font(.caption2)
@@ -57,9 +64,18 @@ enum Tabs: String, CaseIterable {
     
     var imageName: String {
         switch self {
-        case .activity: return "checkmark.circle"
-        case .ranks: return "chart.bar.fill"
+        case .activity: return "activityIcon"
+        case .ranks: return "ranksIcon"
         case .profile: return "person.fill"
+        }
+    }
+    
+    var isSFSymbol: Bool {
+        switch self {
+        case .profile:
+            return true // Use SF Symbol
+        case .ranks, .activity:
+            return false // Use Asset Image
         }
     }
 }

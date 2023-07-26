@@ -11,10 +11,11 @@
 		334BB60F2A6F63B80025CA39 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB6072A6F63B80025CA39 /* ProfileView.swift */; };
 		334BB6102A6F63B80025CA39 /* TabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB6092A6F63B80025CA39 /* TabBarItem.swift */; };
 		334BB6112A6F63B80025CA39 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60A2A6F63B80025CA39 /* CustomTabBar.swift */; };
-		334BB6122A6F63B80025CA39 /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60B2A6F63B80025CA39 /* TabBarButton.swift */; };
 		334BB6132A6F63B80025CA39 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60C2A6F63B80025CA39 /* RootView.swift */; };
 		334BB6142A6F63B80025CA39 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60D2A6F63B80025CA39 /* ActivityView.swift */; };
 		334BB6152A6F63B80025CA39 /* RanksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334BB60E2A6F63B80025CA39 /* RanksView.swift */; };
+		33FE8F532A710AD7002F91F8 /* ActivitySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE8F522A710AD7002F91F8 /* ActivitySummaryView.swift */; };
+		33FE8F552A710B5B002F91F8 /* AchievementListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE8F542A710B5B002F91F8 /* AchievementListView.swift */; };
 		CC9F35642A6D1CC000AB2EC1 /* CleantifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9F35632A6D1CC000AB2EC1 /* CleantifyApp.swift */; };
 		CC9F35662A6D1CC000AB2EC1 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9F35652A6D1CC000AB2EC1 /* StartView.swift */; };
 		CC9F35682A6D1CC000AB2EC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC9F35672A6D1CC000AB2EC1 /* Assets.xcassets */; };
@@ -56,10 +57,11 @@
 		334BB6072A6F63B80025CA39 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		334BB6092A6F63B80025CA39 /* TabBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarItem.swift; sourceTree = "<group>"; };
 		334BB60A2A6F63B80025CA39 /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
-		334BB60B2A6F63B80025CA39 /* TabBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		334BB60C2A6F63B80025CA39 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		334BB60D2A6F63B80025CA39 /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		334BB60E2A6F63B80025CA39 /* RanksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RanksView.swift; sourceTree = "<group>"; };
+		33FE8F522A710AD7002F91F8 /* ActivitySummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitySummaryView.swift; sourceTree = "<group>"; };
+		33FE8F542A710B5B002F91F8 /* AchievementListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementListView.swift; sourceTree = "<group>"; };
 		CC9F35602A6D1CC000AB2EC1 /* Cleantify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cleantify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9F35632A6D1CC000AB2EC1 /* CleantifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleantifyApp.swift; sourceTree = "<group>"; };
 		CC9F35652A6D1CC000AB2EC1 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -108,7 +110,6 @@
 			children = (
 				334BB6092A6F63B80025CA39 /* TabBarItem.swift */,
 				334BB60A2A6F63B80025CA39 /* CustomTabBar.swift */,
-				334BB60B2A6F63B80025CA39 /* TabBarButton.swift */,
 			);
 			path = "Custom Tab Bar";
 			sourceTree = "<group>";
@@ -117,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				334BB6072A6F63B80025CA39 /* ProfileView.swift */,
+				33FE8F542A710B5B002F91F8 /* AchievementListView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				334BB60D2A6F63B80025CA39 /* ActivityView.swift */,
+				33FE8F522A710AD7002F91F8 /* ActivitySummaryView.swift */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -308,12 +311,13 @@
 			files = (
 				334BB6152A6F63B80025CA39 /* RanksView.swift in Sources */,
 				334BB6132A6F63B80025CA39 /* RootView.swift in Sources */,
+				33FE8F532A710AD7002F91F8 /* ActivitySummaryView.swift in Sources */,
 				334BB60F2A6F63B80025CA39 /* ProfileView.swift in Sources */,
 				CC9F35662A6D1CC000AB2EC1 /* StartView.swift in Sources */,
+				33FE8F552A710B5B002F91F8 /* AchievementListView.swift in Sources */,
 				334BB6102A6F63B80025CA39 /* TabBarItem.swift in Sources */,
 				334BB6052A6F63910025CA39 /* Color+Extension.swift in Sources */,
 				334BB6142A6F63B80025CA39 /* ActivityView.swift in Sources */,
-				334BB6122A6F63B80025CA39 /* TabBarButton.swift in Sources */,
 				334BB6112A6F63B80025CA39 /* CustomTabBar.swift in Sources */,
 				CC9F35642A6D1CC000AB2EC1 /* CleantifyApp.swift in Sources */,
 			);
