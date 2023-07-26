@@ -22,7 +22,7 @@ struct SummaryView: View {
     
     var body: some View {
         if workoutManager.workout == nil {
-            ProgressView("Saving Workout")
+            ProgressView("Saving Cleaning Activity")
                 .navigationBarHidden(true)
         } else {
             ScrollView {
