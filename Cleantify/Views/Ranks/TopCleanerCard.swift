@@ -1,8 +1,8 @@
 //
-//  TopCleanerCardView.swift
+//  TopCleanerCard.swift
 //  Cleantify
 //
-//  Created by Muhammad Yusuf on 26/07/23.
+//  Created by Vicky Irwanto on 27/07/23.
 //
 
 import SwiftUI

@@ -37,9 +37,9 @@
 		CCE5F1DE2A701A4900539D5F /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1DD2A701A4900539D5F /* WorkoutListView.swift */; };
 		CCE5F1E82A7181E800539D5F /* GameKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1E72A7181E800539D5F /* GameKitManager.swift */; };
 		CCE5F1EA2A71821000539D5F /* Cleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1E92A71821000539D5F /* Cleaner.swift */; };
-		CCE5F1EE2A71824400539D5F /* ProfileIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1EB2A71824400539D5F /* ProfileIcon.swift */; };
-		CCE5F1EF2A71824400539D5F /* LeaderBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1EC2A71824400539D5F /* LeaderBoard.swift */; };
-		CCE5F1F02A71824400539D5F /* TopCleanerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1ED2A71824400539D5F /* TopCleanerCard.swift */; };
+		CCE5F1F92A718E0200539D5F /* TopCleanerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1F82A718E0200539D5F /* TopCleanerCard.swift */; };
+		CCE5F1FB2A718E2D00539D5F /* PorfileIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1FA2A718E2D00539D5F /* PorfileIcon.swift */; };
+		CCE5F1FD2A718E5500539D5F /* LeaderBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1FC2A718E5500539D5F /* LeaderBoard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,10 +100,10 @@
 		CCE5F1DD2A701A4900539D5F /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		CCE5F1E72A7181E800539D5F /* GameKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameKitManager.swift; sourceTree = "<group>"; };
 		CCE5F1E92A71821000539D5F /* Cleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cleaner.swift; sourceTree = "<group>"; };
-		CCE5F1EB2A71824400539D5F /* ProfileIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileIcon.swift; path = "../../../../../../../Downloads/cleantify-main/Cleantify/Views/Ranks/ProfileIcon.swift"; sourceTree = "<group>"; };
-		CCE5F1EC2A71824400539D5F /* LeaderBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeaderBoard.swift; path = "../../../../../../../Downloads/cleantify-main/Cleantify/Views/Ranks/LeaderBoard.swift"; sourceTree = "<group>"; };
-		CCE5F1ED2A71824400539D5F /* TopCleanerCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopCleanerCard.swift; path = "../../../../../../../Downloads/cleantify-main/Cleantify/Views/Ranks/TopCleanerCard.swift"; sourceTree = "<group>"; };
 		CCE5F1F32A7183FB00539D5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CCE5F1F82A718E0200539D5F /* TopCleanerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopCleanerCard.swift; sourceTree = "<group>"; };
+		CCE5F1FA2A718E2D00539D5F /* PorfileIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PorfileIcon.swift; sourceTree = "<group>"; };
+		CCE5F1FC2A718E5500539D5F /* LeaderBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,11 +167,11 @@
 		334BB6182A6F63F90025CA39 /* Ranks */ = {
 			isa = PBXGroup;
 			children = (
-				CCE5F1EC2A71824400539D5F /* LeaderBoard.swift */,
-				CCE5F1EB2A71824400539D5F /* ProfileIcon.swift */,
-				CCE5F1ED2A71824400539D5F /* TopCleanerCard.swift */,
 				CCE5F1E92A71821000539D5F /* Cleaner.swift */,
 				334BB60E2A6F63B80025CA39 /* RanksView.swift */,
+				CCE5F1F82A718E0200539D5F /* TopCleanerCard.swift */,
+				CCE5F1FA2A718E2D00539D5F /* PorfileIcon.swift */,
+				CCE5F1FC2A718E5500539D5F /* LeaderBoard.swift */,
 			);
 			path = Ranks;
 			sourceTree = "<group>";
@@ -371,14 +371,14 @@
 				334BB6132A6F63B80025CA39 /* RootView.swift in Sources */,
 				33FE8F532A710AD7002F91F8 /* ActivitySummaryView.swift in Sources */,
 				334BB60F2A6F63B80025CA39 /* ProfileView.swift in Sources */,
-				CCE5F1EE2A71824400539D5F /* ProfileIcon.swift in Sources */,
+				CCE5F1F92A718E0200539D5F /* TopCleanerCard.swift in Sources */,
 				CC9F35662A6D1CC000AB2EC1 /* StartView.swift in Sources */,
+				CCE5F1FB2A718E2D00539D5F /* PorfileIcon.swift in Sources */,
 				33FE8F552A710B5B002F91F8 /* AchievementListView.swift in Sources */,
 				CCE5F1E82A7181E800539D5F /* GameKitManager.swift in Sources */,
-				CCE5F1F02A71824400539D5F /* TopCleanerCard.swift in Sources */,
-				CCE5F1EF2A71824400539D5F /* LeaderBoard.swift in Sources */,
 				334BB6102A6F63B80025CA39 /* TabBarItem.swift in Sources */,
 				CCE5F1EA2A71821000539D5F /* Cleaner.swift in Sources */,
+				CCE5F1FD2A718E5500539D5F /* LeaderBoard.swift in Sources */,
 				334BB6052A6F63910025CA39 /* Color+Extension.swift in Sources */,
 				334BB6142A6F63B80025CA39 /* ActivityView.swift in Sources */,
 				334BB6112A6F63B80025CA39 /* CustomTabBar.swift in Sources */,
