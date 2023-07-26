@@ -9,25 +9,26 @@ import SwiftUI
 import HealthKit
 
 struct StartView: View {
-    
-    var workoutTypes: [HKWorkoutActivityType] = [.cycling, .running, .walking]
+    @EnvironmentObject var workoutManager: WorkoutManager
+    var workoutTypes: [HKWorkoutActivityType] = [.hockey, .golf, .flexibility]
     
     var body: some View {
-        List(workoutTypes){ workoutTypes in
-            NavigationLink(workoutTypes.name, destination: Text(workoutTypes.name))
-                .padding(
-                    EdgeInsets(top: 15, leading: 5, bottom: 15, trailing: 5)
-                )
-            
+        List(workoutTypes) { workoutType in
+            NavigationLink(workoutType.name, destination: SessionPagingView(),
+                           tag: workoutType, selection: $workoutManager.selectedWorkout)
+                .padding(EdgeInsets(top: 15, leading: 5, bottom: 15, trailing: 5))
         }
         .listStyle(.carousel)
-        .navigationTitle("Workouts")
+        .navigationBarTitle("Cleaning")
+        .onAppear {
+            workoutManager.requestAuthorization()
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        StartView()
+        StartView().environmentObject(WorkoutManager())
     }
 }
 
@@ -38,12 +39,12 @@ extension HKWorkoutActivityType: Identifiable{
     
     var name: String{
         switch self{
-        case .running:
-            return "Run"
-        case .cycling:
-            return "Bike"
-        case .walking:
-            return "Walk"
+        case .hockey:
+            return "Sweep"
+        case .golf:
+            return "Mop"
+        case .flexibility:
+            return "Cleaning Bed"
         default:
             return ""
         }
