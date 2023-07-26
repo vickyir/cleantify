@@ -32,6 +32,8 @@
 		CC9F357A2A6D1CC100AB2EC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC9F35792A6D1CC100AB2EC1 /* Assets.xcassets */; };
 		CC9F357D2A6D1CC100AB2EC1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC9F357C2A6D1CC100AB2EC1 /* Preview Assets.xcassets */; };
 		CC9F35882A6D20C700AB2EC1 /* SessionPagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9F35872A6D20C700AB2EC1 /* SessionPagingView.swift */; };
+		CCE5F1DC2A7019F700539D5F /* CleaningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1DB2A7019F700539D5F /* CleaningViewModel.swift */; };
+		CCE5F1DE2A701A4900539D5F /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE5F1DD2A701A4900539D5F /* WorkoutListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +89,8 @@
 		CC9F35872A6D20C700AB2EC1 /* SessionPagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPagingView.swift; sourceTree = "<group>"; };
 		CCE5F1D32A6FB74700539D5F /* Cleantify Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Cleantify Watch App.entitlements"; sourceTree = "<group>"; };
 		CCE5F1D42A6FB7A300539D5F /* Cleantify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cleantify.entitlements; sourceTree = "<group>"; };
+		CCE5F1DB2A7019F700539D5F /* CleaningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleaningViewModel.swift; sourceTree = "<group>"; };
+		CCE5F1DD2A701A4900539D5F /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,11 +187,13 @@
 			isa = PBXGroup;
 			children = (
 				CCE5F1D42A6FB7A300539D5F /* Cleantify.entitlements */,
+				CCE5F1D62A6FBAF600539D5F /* ViewModel */,
 				CC9F35632A6D1CC000AB2EC1 /* CleantifyApp.swift */,
 				334BB6192A6F642E0025CA39 /* Extensions */,
 				CC9F35652A6D1CC000AB2EC1 /* StartView.swift */,
 				334BB6062A6F63B80025CA39 /* Views */,
 				CC9F35672A6D1CC000AB2EC1 /* Assets.xcassets */,
+				CCE5F1DD2A701A4900539D5F /* WorkoutListView.swift */,
 				CC9F35692A6D1CC000AB2EC1 /* Preview Content */,
 			);
 			path = Cleantify;
@@ -227,6 +233,14 @@
 				CC9F357C2A6D1CC100AB2EC1 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CCE5F1D62A6FBAF600539D5F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CCE5F1DB2A7019F700539D5F /* CleaningViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,7 +345,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCE5F1DC2A7019F700539D5F /* CleaningViewModel.swift in Sources */,
 				334BB6152A6F63B80025CA39 /* RanksView.swift in Sources */,
+				CCE5F1DE2A701A4900539D5F /* WorkoutListView.swift in Sources */,
 				334BB6132A6F63B80025CA39 /* RootView.swift in Sources */,
 				334BB60F2A6F63B80025CA39 /* ProfileView.swift in Sources */,
 				CC9F35662A6D1CC000AB2EC1 /* StartView.swift in Sources */,
@@ -564,9 +580,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Cleantify;
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -601,9 +615,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Cleantify;
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

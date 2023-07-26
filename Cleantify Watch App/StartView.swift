@@ -21,7 +21,10 @@ struct StartView: View {
         .listStyle(.carousel)
         .navigationBarTitle("Cleaning")
         .onAppear {
-            workoutManager.requestAuthorization()
+            if workoutManager.checkPermission == false{
+                workoutManager.requestAuthorization()
+            }
+           
         }
     }
 }

@@ -9,6 +9,9 @@ import Foundation
 import HealthKit
 
 class WorkoutManager: NSObject, ObservableObject {
+    
+    
+    @Published var checkPermission: Bool = false
     var selectedWorkout: HKWorkoutActivityType? {
         didSet {
             guard let selectedWorkout = selectedWorkout else { return }
@@ -78,6 +81,13 @@ class WorkoutManager: NSObject, ObservableObject {
         // Request authorization for those quantity types.
         healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { (success, error) in
             // Handle error.
+            if success{
+                print("Authorization berhasil")
+                self.checkPermission = true
+            }else{
+                print(error?.localizedDescription ?? "")
+                self.checkPermission = false
+            }
         }
     }
 
