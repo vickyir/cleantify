@@ -12,6 +12,8 @@ struct CleantifyApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .preferredColorScheme(.light)
+//            WorkoutListView()
         }
     }
 }
