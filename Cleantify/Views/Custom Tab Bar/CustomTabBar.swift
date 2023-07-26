@@ -17,7 +17,7 @@ struct CustomTabBar: View {
                 TabBarItem(tab: tab, selectedTab: $selectedTab, circleOffset: $circleOffset)
             }
         }
-        .frame(height: 75)
+        .frame(height: 100)
         .background(Color.darkBlue)
         .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: -6)
     }

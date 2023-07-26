@@ -13,10 +13,10 @@ struct RootView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            Color.lightWhite.edgesIgnoringSafeArea(.all) // Set background color for the entire view
+            Color.lightWhite
             
             VStack {
-                // Your content here (activity, ranks, or profile views)
+                
                 switch selectedTab {
                 case .activity:
                     ActivityView()
@@ -25,11 +25,13 @@ struct RootView: View {
                 case .profile:
                     ProfileView()
                 }
+                
             }
 
             
             CustomTabBar(selectedTab: $selectedTab)
-                .background(Color.lightWhite) // Set background color for the CustomTabBar
+                .background(Color.lightWhite)
+                .padding(.bottom,-35)
         }
     }
 

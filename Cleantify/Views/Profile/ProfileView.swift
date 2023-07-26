@@ -7,14 +7,170 @@
 
 import SwiftUI
 
+struct AcheivementCard: Identifiable {
+    let id = UUID()
+    let imageName: String
+    let title: String
+    let description: String
+    let progress: Double
+}
+
 struct ProfileView: View {
+    
+    @State private var showAchievement = false
+    
+    let achievementCards: [AcheivementCard] = [
+        AcheivementCard(imageName: "gloves", title: "The Explorer", description: "Start a cleaning activity", progress: 0.6),
+        AcheivementCard(imageName: "gloves", title: "Legendary", description: "Hit 100 kcal in sweeping activity", progress: 0.8),
+        AcheivementCard(imageName: "gloves", title: "The Brave One", description: "Brave enough to wake up and making the bed", progress: 0.4)
+    ]
+    
     var body: some View {
-        VStack{
-            Text("Hello, Welcome to Profile View")
-                .font(Font.system(size: 20, weight: .bold, design: .rounded))
-                .foregroundColor(.darkBlack)
+        NavigationView{
+            VStack{
+                Text("Profile")
+                    .font(Font.system(size: 30, weight: .bold, design: .rounded))
+                    .foregroundColor(.darkBlack)
+                    .padding(.bottom, 30)
+                
+                ZStack{
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 353, height: 169)
+                        .background(Color.darkBlue)
+                        .cornerRadius(20)
+                    HStack{
+                        VStack(alignment: .leading){
+                            Text("Nisa")
+                                .font(Font.system(size: 30, weight: .bold, design: .rounded))
+                                .foregroundColor(.softGreen)
+                            HStack{
+                                VStack(alignment: .leading){
+                                    Text("Username")
+                                        .font(Font.system(size: 15, weight: .bold, design: .rounded))
+                                        .foregroundColor(.lightWhite)
+                                    Text("ID")
+                                        .font(Font.system(size: 15, weight: .bold, design: .rounded))
+                                        .foregroundColor(.lightWhite)
+                                }
+                                VStack(alignment: .leading){
+                                    Text("knsnisa")
+                                        .font(Font.system(size: 15, weight: .bold, design: .rounded))
+                                        .foregroundColor(.lightWhite)
+                                    Text("En0xoP")
+                                        .font(Font.system(size: 15, weight: .bold, design: .rounded))
+                                        .foregroundColor(.lightWhite)
+                                }
+                                .padding(.leading)
+                            }
+                            .padding(.bottom,5)
+                            
+                            ProgressView(value: 0.6,
+                                         label: {
+                                HStack{
+                                    Text("Clean Points")
+                                        .font(Font.system(size: 15, weight: .bold, design: .rounded))
+                                        .foregroundColor(.lightWhite)
+                                    Spacer()
+                                    Text("1850")
+                                        .font(Font.system(size: 20, weight: .bold, design: .rounded))
+                                        .foregroundColor(.softGreen)
+                                }
+                            })
+                            
+                            HStack{
+                                Spacer()
+                                Text("Legendary")
+                                    .font(Font.system(size: 15, weight: .bold, design: .rounded))
+                                    .foregroundColor(.lightWhite)
+                            }
+                            
+                        }
+                        .padding(.leading, 25)
+                        
+                        
+                        Image("Pic")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                            .padding(.trailing, 25)
+                        
+                    }
+                }
+                .tint(.softGreen)
+                
+                
+                HStack {
+                    Text("Achievements")
+                        .font(Font.system(size: 20, weight: .bold, design: .rounded))
+                        .foregroundColor(.darkBlack)
+                    
+                    Spacer()
+                    
+                    NavigationLink(destination: AchievementListView(achievementCards: achievementCards), isActive: $showAchievement) {
+                        HStack {
+                            Text("Show More")
+                                .font(Font.system(size: 15, weight: .bold, design: .rounded))
+                                .foregroundColor(.darkBlack)
+                            
+                            Image(systemName: "arrow.right")
+                                .foregroundColor(.darkBlack)
+                        }
+                    }
+                }
+                .padding(.top, 15)
+                
+                VStack {
+                    ForEach(achievementCards.prefix(3)) { card in
+                        AchievementCard(achievement: card)
+                    }
+                }
+                .tint(.softGreen)
+                Spacer()
+            }
+            .padding(.horizontal, 20)
         }
-        
+    }
+}
+
+struct AchievementCard: View {
+    
+    let achievement: AcheivementCard
+    
+    var body: some View {
+        ZStack{
+            Rectangle()
+                .foregroundColor(.clear)
+                .frame(width: 353, height: 97)
+                .background(Color.darkBlue)
+                .cornerRadius(20)
+            
+            HStack{
+                Image(achievement.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 75, height: 75)
+                    .padding(.leading, 20)
+                
+                VStack(alignment: .leading, spacing: 5){
+                    Text(achievement.title)
+                        .font(Font.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundColor(.lightWhite)
+                    
+                    Text(achievement.description)
+                        .font(Font.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundColor(.lightWhite)
+                    
+                    ProgressView(value: achievement.progress)
+                        .padding(.vertical, 5)
+                    
+                }
+                .padding(.leading, 10)
+                .padding(.trailing, 30)
+                
+            }
+        }
     }
 }
 
