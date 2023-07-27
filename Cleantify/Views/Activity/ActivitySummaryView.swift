@@ -168,18 +168,33 @@ struct ActivitySummaryView: View {
                 }
             }
             .onAppear{
-                healthKitManager.requestAuthorization { success, error in
-                    if success {
-                        healthKitManager.getWorkouts { workouts, error in
-                            if let workouts = workouts {
-                                DispatchQueue.main.async {
-                                    // Filter the workouts based on activity types
-                                    self.workouts = workouts
+                // Check if the authorization status is not determined (i.e., user hasn't made a choice yet)
+                if HKHealthStore().authorizationStatus(for: HKObjectType.workoutType()) == .notDetermined {
+                    // Request authorization
+                    healthKitManager.requestAuthorization { success, error in
+                        if success {
+                            healthKitManager.getWorkouts { workouts, error in
+                                if let workouts = workouts {
+                                    DispatchQueue.main.async {
+                                        // Filter the workouts based on activity types
+                                        self.workouts = workouts
+                                    }
                                 }
                             }
+                        } else if let error = error {
+                            print("Error: \(error.localizedDescription)")
                         }
-                    } else if let error = error {
-                        print("Error: \(error.localizedDescription)")
+                    }
+                } else {
+                    // Authorization already granted or denied, so no need to request again
+                    // You can directly fetch workouts here or handle it accordingly
+                    healthKitManager.getWorkouts { workouts, error in
+                        if let workouts = workouts {
+                            DispatchQueue.main.async {
+                                // Filter the workouts based on activity types
+                                self.workouts = workouts
+                            }
+                        }
                     }
                 }
             }

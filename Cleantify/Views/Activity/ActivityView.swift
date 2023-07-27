@@ -17,10 +17,13 @@ struct Activity: Identifiable {
 struct ActivityView: View {
     
     @State private var showSummary = false
+    @State private var showLeaderboard = false
     @State private var workouts: [HKWorkout] = []
     @State private var filteredWorkouts: [HKWorkout] = []
-    
-    let healthKitManager = HealthKitManager()
+    let gamekitManager = GameKitManager()
+    @State private var cleaners: [Cleaner] = []
+    @State var score : Int = 0
+    @EnvironmentObject var healthKitManager : HealthKitManager
     
     let activities = [
         Activity(imageName: "Sapu", points: "900"),
@@ -123,13 +126,38 @@ struct ActivityView: View {
                             ForEach(workouts.prefix(3), id: \.uuid) { clean in
                                 
                                 if [.hockey, .golf, .flexibility].contains(clean.workoutActivityType){
+                                  
                                     let cleaningName = localizedWorkoutName(for: clean.workoutActivityType)
                                     ActivityListItem(imageName: cleaningName, points:  String(format: "%.0f", clean.totalDistance?.doubleValue(for: .meter()) ?? 0.0))
+                                  
+                                    
                                 }
+                                
+                                
                                 
                                 
                             }
                             Spacer()
+                        }
+                        
+                        .onChange(of: workouts){
+                            data in
+                            score = 0
+                            for clean in data{
+                                switch clean.workoutActivityType{
+                                case .golf:
+                                    score += 25
+                                case .hockey:
+                                    score += 5
+                                case .flexibility:
+                                    score += 15
+                                default:
+                                    score += 0
+                                }
+                            }
+                            Task{
+                                await gamekitManager.submitScore(score: score)
+                            }
                         }
                         
                         VStack{
@@ -138,11 +166,9 @@ struct ActivityView: View {
                                     .font(Font.system(size: 20, weight: .bold, design: .rounded))
                                     .foregroundColor(.darkBlack)
                                 Spacer()
-                                Button(action: {
-                                    
-                                }){
+                                NavigationLink(destination: RanksView(), isActive: $showLeaderboard) {
                                     HStack {
-                                        Text("show more")
+                                        Text("Show More")
                                             .font(Font.system(size: 15, weight: .bold, design: .rounded))
                                             .foregroundColor(.darkBlack)
                                         
@@ -150,6 +176,7 @@ struct ActivityView: View {
                                             .foregroundColor(.darkBlack)
                                     }
                                 }
+                              
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -158,16 +185,26 @@ struct ActivityView: View {
                             ZStack{
                                 Rectangle()
                                     .foregroundColor(.clear)
-                                    .frame(width: 313, height: 283)
+                                    .frame(width: 313, height: 293)
                                     .background(Color(red: 0.5, green: 0.79, blue: 0.77))
                                     .cornerRadius(20)
                                 
                                 
                                 VStack {
-                                    ForEach(leaderboardScores) { score in
-                                        ListScoreView(score: score)
+                                
+                                    ForEach(cleaners.prefix(3), id: \.id) { cleaner in
+                                        LeaderBoard(number: "\(cleaner.rank)",
+                                                    imageProfile: ProfileIcon(name: cleaner.name),
+                                                    name: String(cleaner.name.prefix(6))+String(Slice(repeating: ".", count: 3)),
+                                                    description: "Cleaner",
+                                                    score: String(cleaner.score)).padding(.top, 0.0)
+                                        
                                     }
+                                    
+                                   
+                                    
                                 }
+                                
                             }
                         }
                         
@@ -175,12 +212,27 @@ struct ActivityView: View {
                     .padding(.horizontal, 50)
                     .tint(.softGreen)
                 }
-            }
-            .padding(.bottom, 65)
-            .navigationBarTitle("Hello Nisa")
-            .onAppear{
-                healthKitManager.requestAuthorization { success, error in
-                    if success {
+                .refreshable{
+                    // Check if the authorization status is not determined (i.e., user hasn't made a choice yet)
+                    if HKHealthStore().authorizationStatus(for: HKObjectType.workoutType()) == .notDetermined {
+                        // Request authorization
+                        healthKitManager.requestAuthorization { success, error in
+                            if success {
+                                healthKitManager.getWorkouts { workouts, error in
+                                    if let workouts = workouts {
+                                        DispatchQueue.main.async {
+                                            // Filter the workouts based on activity types
+                                            self.workouts = workouts
+                                        }
+                                    }
+                                }
+                            } else if let error = error {
+                                print("Error: \(error.localizedDescription)")
+                            }
+                        }
+                    } else {
+                        // Authorization already granted or denied, so no need to request again
+                        // You can directly fetch workouts here or handle it accordingly
                         healthKitManager.getWorkouts { workouts, error in
                             if let workouts = workouts {
                                 DispatchQueue.main.async {
@@ -189,8 +241,51 @@ struct ActivityView: View {
                                 }
                             }
                         }
-                    } else if let error = error {
-                        print("Error: \(error.localizedDescription)")
+                    }
+
+                }
+            }
+            .padding(.bottom, 65)
+            .navigationBarTitle("Hello Nisa")
+            .onAppear{
+                // Check if the authorization status is not determined (i.e., user hasn't made a choice yet)
+                if HKHealthStore().authorizationStatus(for: HKObjectType.workoutType()) == .notDetermined {
+                    // Request authorization
+                    healthKitManager.requestAuthorization { success, error in
+                        if success {
+                            healthKitManager.getWorkouts { workouts, error in
+                                if let workouts = workouts {
+                                    DispatchQueue.main.async {
+                                        // Filter the workouts based on activity types
+                                        self.workouts = workouts
+                                    }
+                                }
+                            }
+                        } else if let error = error {
+                            print("Error: \(error.localizedDescription)")
+                        }
+                    }
+                } else {
+                    // Authorization already granted or denied, so no need to request again
+                    // You can directly fetch workouts here or handle it accordingly
+                    healthKitManager.getWorkouts { workouts, error in
+                        if let workouts = workouts {
+                            DispatchQueue.main.async {
+                                // Filter the workouts based on activity types
+                                self.workouts = workouts
+                            }
+                        }
+                    }
+                }
+                
+                GameKitManager.shared.authenticatePlayer() { success in
+                    if success {
+                        GameKitManager.shared.fetchPlayerData { cleaners in
+                            self.cleaners = cleaners
+//                            Task{
+//                                await gamekitManager.submitScore(score: 5)
+//                            }
+                        }
                     }
                 }
             }
@@ -307,5 +402,6 @@ struct ListScoreView: View {
 struct ActivityView_Previews: PreviewProvider {
     static var previews: some View {
         ActivityView()
+            .environmentObject(HealthKitManager())
     }
 }

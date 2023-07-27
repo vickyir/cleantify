@@ -46,6 +46,7 @@ struct LeaderBoard: View {
                 }.padding(.leading, 15)
             }
             
+
             HStack{
                 Image("ArrowDownColor")
                     .resizable()
@@ -53,6 +54,7 @@ struct LeaderBoard: View {
                 Text("1")
                     .font(.system(size: 30, weight: .bold, design: .rounded))
             }
+
         }
     }
 }
