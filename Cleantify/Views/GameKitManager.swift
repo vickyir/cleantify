@@ -12,7 +12,7 @@ import GameKit
 
 class GameKitManager: NSObject, ObservableObject, GKGameCenterControllerDelegate {
     static let shared = GameKitManager()
-    
+    @Published var username: String = "default"
     
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true, completion: nil)
@@ -25,14 +25,14 @@ class GameKitManager: NSObject, ObservableObject, GKGameCenterControllerDelegate
     }
     
     func openLeaderboard() {
-        let gameCenterVc = GKGameCenterViewController(leaderboardID: "sabarjaya.cleantify", playerScope: .global, timeScope: .today)
+        let gameCenterVc = GKGameCenterViewController(leaderboardID: "cleantify.sabarjaya", playerScope: .global, timeScope: .today)
         gameCenterVc.gameCenterDelegate = self
         rootViewController?.present(gameCenterVc, animated: true)
     }
     
     func submitScore(score: Int) async {
         let player = GKLocalPlayer.local
-        GKLeaderboard.submitScore(score, context: 0, player: player, leaderboardIDs: ["sabarjaya.cleantify"]) { [self] error in
+        GKLeaderboard.submitScore(score, context: 0, player: player, leaderboardIDs: ["cleantify.sabarjaya"]) { [self] error in
             guard error == nil else {
                 print(error?.localizedDescription ?? "")
                 return
@@ -57,6 +57,8 @@ class GameKitManager: NSObject, ObservableObject, GKGameCenterControllerDelegate
                 } else {
                     // Authentication successful
                     completion(true)
+                    self.username = GKLocalPlayer.local.displayName
+                    print("username \(self.username)")
                     print("Player is authenticated!")
                 }
             }
@@ -77,7 +79,7 @@ class GameKitManager: NSObject, ObservableObject, GKGameCenterControllerDelegate
             return
         }
         
-        let leaderboardID = "sabarjaya.cleantify"
+        let leaderboardID = "cleantify.sabarjaya"
         let leaderboard = GKLeaderboard()
         
         leaderboard.identifier = leaderboardID
@@ -89,16 +91,38 @@ class GameKitManager: NSObject, ObservableObject, GKGameCenterControllerDelegate
                 var cleaners: [Cleaner] = []
                 for score in scores {
                    let picName = score.player.loadPhoto(for: .small)
-                
-                    print("pic Name \(picName)")
-                    
-                    print(score)
-                    let cleaner = Cleaner(name: score.player.alias, score: score.value, rank: score.rank)
+                    let cleaner = Cleaner(name: score.player.displayName, score: score.value, rank: score.rank)
                     cleaners.append(cleaner)
                 }
                 print("cleaner \(cleaners.count)")
                 
                 completion(cleaners)
+            }
+        }
+    }
+    
+    func fetchDataLocalPlayer(completion: @escaping (Cleaner?, Error?) -> Void) {
+        guard GKLocalPlayer.local.isAuthenticated else {
+            print("Error: Local player is not authenticated.")
+            completion(nil, nil)
+            return
+        }
+        
+        let leaderboardID = "cleantify.sabarjaya"
+        let leaderboard = GKLeaderboard(players: [GKLocalPlayer.local])
+        
+        leaderboard.identifier = leaderboardID
+        leaderboard.loadScores { (scores, error) in
+            if let error = error {
+                print("Error fetching leaderboard scores: \(error.localizedDescription)")
+                completion(nil, error)
+            } else if let scores = scores, let firstScore = scores.first {
+                let playerAlias = firstScore.player.alias ?? "Unknown"
+                let cleaner = Cleaner(name: playerAlias, score: firstScore.value, rank: firstScore.rank)
+                completion(cleaner, nil)
+            } else {
+                print("No leaderboard scores found.")
+                completion(nil, nil)
             }
         }
     }

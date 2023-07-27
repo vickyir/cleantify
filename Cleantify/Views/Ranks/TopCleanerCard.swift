@@ -14,10 +14,15 @@ struct TopCleanerCard: View {
     let rank: Int
     let name: String
     let height: CGFloat
+    let isMe: Bool
     
     var body: some View {
         VStack{
             Spacer()
+            if isMe{
+                Image("triangle.fill")
+                    .padding(.bottom, -10)
+            }
             Text(name)
                 .font(.system(size: 20, weight: .bold, design: .rounded))
                 .foregroundColor(.darkBlue)
@@ -44,6 +49,6 @@ struct TopCleanerCard: View {
 
 struct TopCleanerCardView_Previews: PreviewProvider {
     static var previews: some View {
-        TopCleanerCard(imageProfile: ProfileIcon(name: "Yusuf"), points: "2000", color: .lightYellow, rank: 10, name: String("Yusuf".prefix(6))+String(Slice(repeating: ".", count: 3)).capitalized, height: 151)
+        TopCleanerCard(imageProfile: ProfileIcon(name: "Yusuf"), points: "2000", color: .lightYellow, rank: 10, name: String("Yusuf".prefix(6))+String(Slice(repeating: ".", count: 3)).capitalized, height: 151, isMe: false)
     }
 }

@@ -18,6 +18,9 @@ struct AcheivementCard: Identifiable {
 struct ProfileView: View {
     
     @State private var showAchievement = false
+    @State private var cleaner: Cleaner = Cleaner(name: "Nisa", score: 100, rank: 1)
+
+    let gamekitManager = GameKitManager()
     
     let achievementCards: [AcheivementCard] = [
         AcheivementCard(imageName: "gloves", title: "The Explorer", description: "Start a cleaning activity", progress: 0.6),
@@ -41,7 +44,7 @@ struct ProfileView: View {
                         .cornerRadius(20)
                     HStack{
                         VStack(alignment: .leading){
-                            Text("Nisa")
+                            Text(String(cleaner.name.prefix(5)).capitalized)
                                 .font(Font.system(size: 30, weight: .bold, design: .rounded))
                                 .foregroundColor(.softGreen)
                             HStack{
@@ -54,10 +57,10 @@ struct ProfileView: View {
                                         .foregroundColor(.lightWhite)
                                 }
                                 VStack(alignment: .leading){
-                                    Text("knsnisa")
+                                    Text(String(cleaner.name.prefix(6))+String(Slice(repeating: ".", count: 3)).capitalized)
                                         .font(Font.system(size: 15, weight: .bold, design: .rounded))
                                         .foregroundColor(.lightWhite)
-                                    Text("En0xoP")
+                                    Text(String(cleaner.id.uuidString.prefix(6)))
                                         .font(Font.system(size: 15, weight: .bold, design: .rounded))
                                         .foregroundColor(.lightWhite)
                                 }
@@ -65,14 +68,14 @@ struct ProfileView: View {
                             }
                             .padding(.bottom,5)
                             
-                            ProgressView(value: 0.6,
+                            ProgressView(value: Double(cleaner.score) / 1000.0,
                                          label: {
                                 HStack{
                                     Text("Clean Points")
                                         .font(Font.system(size: 15, weight: .bold, design: .rounded))
                                         .foregroundColor(.lightWhite)
                                     Spacer()
-                                    Text("1850")
+                                    Text(String(cleaner.score))
                                         .font(Font.system(size: 20, weight: .bold, design: .rounded))
                                         .foregroundColor(.softGreen)
                                 }
@@ -130,6 +133,16 @@ struct ProfileView: View {
                 Spacer()
             }
             .padding(.horizontal, 20)
+            .onAppear{
+                GameKitManager.shared.authenticatePlayer() { success in
+                    if success {
+                        GameKitManager.shared.fetchDataLocalPlayer { cleaner, error in
+                            self.cleaner = cleaner ?? Cleaner(name: "Nisa", score: 100, rank: 1)
+
+                        }
+                    }
+                }
+            }
         }
     }
 }

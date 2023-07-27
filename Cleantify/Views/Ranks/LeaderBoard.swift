@@ -50,7 +50,7 @@ struct LeaderBoard: View {
                 Image("ArrowDownColor")
                     .resizable()
                     .frame(width: 32, height: 30)
-                Text("3")
+                Text("1")
                     .font(.system(size: 30, weight: .bold, design: .rounded))
             }
         }
