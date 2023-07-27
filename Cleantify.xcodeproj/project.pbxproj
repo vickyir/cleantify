@@ -532,7 +532,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cleantify Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = MNPQBHRKTX;
+				DEVELOPMENT_TEAM = LC2HFZR2DS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Cleantify;
@@ -540,13 +540,13 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = ir.Cleantify;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = ilb.sabarjaya.Cleantify;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ir.Cleantify.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = ilb.sabarjaya.Cleantify.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -566,7 +566,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cleantify Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = MNPQBHRKTX;
+				DEVELOPMENT_TEAM = LC2HFZR2DS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Cleantify;
@@ -574,13 +574,13 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to write workout data to provide personalized fitness recommendations.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = ir.Cleantify;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = ilb.sabarjaya.Cleantify;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ir.Cleantify.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = ilb.sabarjaya.Cleantify.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -602,7 +602,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cleantify/Preview Content\"";
-				DEVELOPMENT_TEAM = MNPQBHRKTX;
+				DEVELOPMENT_TEAM = LC2HFZR2DS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Cleantify/Info.plist;
@@ -619,7 +619,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ir.Cleantify;
+				PRODUCT_BUNDLE_IDENTIFIER = ilb.sabarjaya.Cleantify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -638,7 +638,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Cleantify/Preview Content\"";
-				DEVELOPMENT_TEAM = MNPQBHRKTX;
+				DEVELOPMENT_TEAM = LC2HFZR2DS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Cleantify/Info.plist;
@@ -655,7 +655,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ir.Cleantify;
+				PRODUCT_BUNDLE_IDENTIFIER = ilb.sabarjaya.Cleantify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;

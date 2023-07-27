@@ -10,6 +10,8 @@ import SwiftUI
 struct RanksView: View {
     let gamekitManager = GameKitManager()
     @State private var cleaners: [Cleaner] = []
+    @State private var cleanerLocal: Cleaner? = .init(name: "default", score: 0, rank: 1)
+    @State private var progressValue: Float = 0.0
     
     var body: some View {
         VStack(spacing: -15){
@@ -21,18 +23,28 @@ struct RanksView: View {
             HStack{
                 if cleaners.indices.contains(1){
                     let cleanerAtIndex2 = cleaners[1]
-                    
-                    TopCleanerCard(imageProfile: ProfileIcon(name: cleanerAtIndex2.name), points: String(cleanerAtIndex2.score), color: .darkBlue, rank: cleanerAtIndex2.rank ,name: String(cleanerAtIndex2.name.prefix(6))+String(Slice(repeating: ".", count: 3)).capitalized, height: 109)
+                    if cleanerLocal?.name == cleanerAtIndex2.name {
+                        TopCleanerCard(imageProfile: ProfileIcon(name: cleanerAtIndex2.name), points: String(cleanerAtIndex2.score), color: .darkBlue, rank: cleanerAtIndex2.rank ,name: "You", height: 109, isMe: true)
+                    }else{
+                        TopCleanerCard(imageProfile: ProfileIcon(name: cleanerAtIndex2.name), points: String(cleanerAtIndex2.score), color: .darkBlue, rank: cleanerAtIndex2.rank ,name: cleanerAtIndex2.name, height: 109, isMe: false)
+                    }
                 }
                 
                 if let firstCleaner = cleaners.first {
-                    TopCleanerCard(imageProfile: ProfileIcon(name: firstCleaner.name), points: String(firstCleaner.score), color: .lightYellow, rank: firstCleaner.rank, name: String(firstCleaner.name.prefix(6))+String(Slice(repeating: ".", count: 3)).capitalized, height: 151)
+                    if cleanerLocal?.name == firstCleaner.name{
+                        TopCleanerCard(imageProfile: ProfileIcon(name: firstCleaner.name), points: String(firstCleaner.score), color: .lightYellow, rank: firstCleaner.rank, name: "You", height: 151, isMe: true)
+                    }else{
+                        TopCleanerCard(imageProfile: ProfileIcon(name: firstCleaner.name), points: String(firstCleaner.score), color: .lightYellow, rank: firstCleaner.rank, name: String(firstCleaner.name.prefix(6))+String(Slice(repeating: ".", count: 3)).capitalized, height: 151, isMe: false)
+                    }
                 }
                 
                 if cleaners.indices.contains(2){
                     let cleanerAtIndex3 = cleaners[2]
-                    
-                    TopCleanerCard(imageProfile: ProfileIcon(name: cleanerAtIndex3.name), points: String(cleanerAtIndex3.score), color: .darkBlue, rank: cleanerAtIndex3.rank ,name: String(cleanerAtIndex3.name.prefix(6))+String(Slice(repeating: ".", count: 3)).capitalized, height: 79)
+                    if cleanerLocal?.name == cleanerAtIndex3.name{
+                        TopCleanerCard(imageProfile: ProfileIcon(name: cleanerAtIndex3.name), points: String(cleanerAtIndex3.score), color: .darkBlue, rank: cleanerAtIndex3.rank ,name: "You", height: 79, isMe: true)
+                    }else{
+                        TopCleanerCard(imageProfile: ProfileIcon(name: cleanerAtIndex3.name), points: String(cleanerAtIndex3.score), color: .darkBlue, rank: cleanerAtIndex3.rank ,name: String(cleanerAtIndex3.name.prefix(6))+String(Slice(repeating: ".", count: 3)).capitalized, height: 79, isMe: false)
+                    }
                 }
             }
             
@@ -58,22 +70,15 @@ struct RanksView: View {
                                         Text("No cleaners available.")
                                             .font(.system(size: 30))
                                             .foregroundColor(.white)
-                                        
                                     }
                                 }
                             }
                         }
-                        .refreshable{
-                            GameKitManager.shared.authenticatePlayer() { success in
-                                if success {
-                                    GameKitManager.shared.fetchPlayerData { cleaners in
-                                        self.cleaners = cleaners
-                //                        Task{
-                //                            await gamekitManager.submitScore(score: 10)
-                //                        }
-                                    }
-                                }
-                            }
+
+                        .refreshable {
+                            loadData()
+
+
                         }
                         .padding(.top, 20)
                     }
@@ -81,6 +86,24 @@ struct RanksView: View {
             }
         }
         .onAppear {
+
+            loadData()
+            
+        }
+    }
+    
+    private func loadData() {
+        GameKitManager.shared.authenticatePlayer() { success in
+            if success {
+                GameKitManager.shared.fetchDataLocalPlayer { cleanerData, err in
+                    print("Cleaner Data \(cleanerData)")
+                    self.cleanerLocal = cleanerData
+                }
+                GameKitManager.shared.fetchPlayerData { cleaners in
+                    self.cleaners = cleaners
+                    Task {
+                        await gamekitManager.submitScore(score: 10)
+
             GameKitManager.shared.authenticatePlayer() { success in
                 if success {
                     GameKitManager.shared.fetchPlayerData { cleaners in
@@ -88,6 +111,7 @@ struct RanksView: View {
 //                        Task{
 //                            await gamekitManager.submitScore(score: 10)
 //                        }
+
                     }
                 }
             }
@@ -97,6 +121,6 @@ struct RanksView: View {
 
 struct RanksView_Previews: PreviewProvider {
     static var previews: some View {
-        RanksView()
+        RanksView().environmentObject(GameKitManager())
     }
 }
