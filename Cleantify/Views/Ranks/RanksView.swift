@@ -72,9 +72,9 @@ struct RanksView: View {
                 if success {
                     GameKitManager.shared.fetchPlayerData { cleaners in
                         self.cleaners = cleaners
-                        Task{
-                            await gamekitManager.submitScore(score: 10)
-                        }
+//                        Task{
+//                            await gamekitManager.submitScore(score: 10)
+//                        }
                     }
                 }
             }

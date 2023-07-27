@@ -17,9 +17,12 @@ struct Activity: Identifiable {
 struct ActivityView: View {
     
     @State private var showSummary = false
+    @State private var showLeaderboard = false
     @State private var workouts: [HKWorkout] = []
     @State private var filteredWorkouts: [HKWorkout] = []
-    
+    let gamekitManager = GameKitManager()
+    @State private var cleaners: [Cleaner] = []
+    @State var score : Int = 0
     let healthKitManager = HealthKitManager()
     
     let activities = [
@@ -32,6 +35,17 @@ struct ActivityView: View {
         ListScore(id: UUID(), number: "2", image: "ava2", name: "Me", description: "Cleanaholic", score: "1850"),
         ListScore(id: UUID(), number: "3", image: "ava3", name: "Yusuf", description: "Grand Clean", score: "1200")
     ]
+    
+    func checkActivity(_ name: String)-> Int{
+        switch name{
+        case "Sweep":
+            return 5
+        case "Mop":
+          return 25
+        default:
+            return 15
+        }
+    }
     
     var body: some View {
         NavigationView{
@@ -123,13 +137,36 @@ struct ActivityView: View {
                             ForEach(workouts.prefix(3), id: \.uuid) { clean in
                                 
                                 if [.hockey, .golf, .flexibility].contains(clean.workoutActivityType){
+                                  
                                     let cleaningName = localizedWorkoutName(for: clean.workoutActivityType)
                                     ActivityListItem(imageName: cleaningName, points:  String(format: "%.0f", clean.totalDistance?.doubleValue(for: .meter()) ?? 0.0))
+                                  
+                                    
                                 }
+                                
+                                
                                 
                                 
                             }
                             Spacer()
+                        }
+                        
+                        .onChange(of: workouts){
+                            data in
+                            score = 0
+                            for clean in data{
+                                switch clean.workoutActivityType{
+                                case .golf:
+                                    score += 25
+                                case .hockey:
+                                    score += 5
+                                default:
+                                    score += 15
+                                }
+                            }
+                            Task{
+                                await gamekitManager.submitScore(score: score)
+                            }
                         }
                         
                         VStack{
@@ -138,11 +175,9 @@ struct ActivityView: View {
                                     .font(Font.system(size: 20, weight: .bold, design: .rounded))
                                     .foregroundColor(.darkBlack)
                                 Spacer()
-                                Button(action: {
-                                    
-                                }){
+                                NavigationLink(destination: RanksView(), isActive: $showLeaderboard) {
                                     HStack {
-                                        Text("show more")
+                                        Text("Show More")
                                             .font(Font.system(size: 15, weight: .bold, design: .rounded))
                                             .foregroundColor(.darkBlack)
                                         
@@ -150,6 +185,7 @@ struct ActivityView: View {
                                             .foregroundColor(.darkBlack)
                                     }
                                 }
+                              
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -164,10 +200,19 @@ struct ActivityView: View {
                                 
                                 
                                 VStack {
-                                    ForEach(leaderboardScores) { score in
-                                        ListScoreView(score: score)
+                                    ForEach(cleaners.prefix(3), id: \.id) { cleaner in
+                                        LeaderBoard(number: "\(cleaner.rank)",
+                                                    imageProfile: ProfileIcon(name: cleaner.name),
+                                                    name: String(cleaner.name.prefix(6))+String(Slice(repeating: ".", count: 3)),
+                                                    description: "Cleaner",
+                                                    score: String(cleaner.score)).padding(.top, 10.0)
+                                        
                                     }
+                                    
+                                    Spacer()
+                                    
                                 }
+                                
                             }
                         }
                         
@@ -191,6 +236,17 @@ struct ActivityView: View {
                         }
                     } else if let error = error {
                         print("Error: \(error.localizedDescription)")
+                    }
+                }
+                
+                GameKitManager.shared.authenticatePlayer() { success in
+                    if success {
+                        GameKitManager.shared.fetchPlayerData { cleaners in
+                            self.cleaners = cleaners
+//                            Task{
+//                                await gamekitManager.submitScore(score: 5)
+//                            }
+                        }
                     }
                 }
             }
