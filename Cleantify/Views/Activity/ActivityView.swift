@@ -23,7 +23,7 @@ struct ActivityView: View {
     let gamekitManager = GameKitManager()
     @State private var cleaners: [Cleaner] = []
     @State var score : Int = 0
-    let healthKitManager = HealthKitManager()
+    @EnvironmentObject var healthKitManager : HealthKitManager
     
     let activities = [
         Activity(imageName: "Sapu", points: "900"),
@@ -35,17 +35,6 @@ struct ActivityView: View {
         ListScore(id: UUID(), number: "2", image: "ava2", name: "Me", description: "Cleanaholic", score: "1850"),
         ListScore(id: UUID(), number: "3", image: "ava3", name: "Yusuf", description: "Grand Clean", score: "1200")
     ]
-    
-    func checkActivity(_ name: String)-> Int{
-        switch name{
-        case "Sweep":
-            return 5
-        case "Mop":
-          return 25
-        default:
-            return 15
-        }
-    }
     
     var body: some View {
         NavigationView{
@@ -160,8 +149,10 @@ struct ActivityView: View {
                                     score += 25
                                 case .hockey:
                                     score += 5
-                                default:
+                                case .flexibility:
                                     score += 15
+                                default:
+                                    score += 0
                                 }
                             }
                             Task{
@@ -194,22 +185,23 @@ struct ActivityView: View {
                             ZStack{
                                 Rectangle()
                                     .foregroundColor(.clear)
-                                    .frame(width: 313, height: 283)
+                                    .frame(width: 313, height: 293)
                                     .background(Color(red: 0.5, green: 0.79, blue: 0.77))
                                     .cornerRadius(20)
                                 
                                 
                                 VStack {
+                                
                                     ForEach(cleaners.prefix(3), id: \.id) { cleaner in
                                         LeaderBoard(number: "\(cleaner.rank)",
                                                     imageProfile: ProfileIcon(name: cleaner.name),
                                                     name: String(cleaner.name.prefix(6))+String(Slice(repeating: ".", count: 3)),
                                                     description: "Cleaner",
-                                                    score: String(cleaner.score)).padding(.top, 10.0)
+                                                    score: String(cleaner.score)).padding(.top, 0.0)
                                         
                                     }
                                     
-                                    Spacer()
+                                   
                                     
                                 }
                                 
@@ -220,12 +212,27 @@ struct ActivityView: View {
                     .padding(.horizontal, 50)
                     .tint(.softGreen)
                 }
-            }
-            .padding(.bottom, 65)
-            .navigationBarTitle("Hello Nisa")
-            .onAppear{
-                healthKitManager.requestAuthorization { success, error in
-                    if success {
+                .refreshable{
+                    // Check if the authorization status is not determined (i.e., user hasn't made a choice yet)
+                    if HKHealthStore().authorizationStatus(for: HKObjectType.workoutType()) == .notDetermined {
+                        // Request authorization
+                        healthKitManager.requestAuthorization { success, error in
+                            if success {
+                                healthKitManager.getWorkouts { workouts, error in
+                                    if let workouts = workouts {
+                                        DispatchQueue.main.async {
+                                            // Filter the workouts based on activity types
+                                            self.workouts = workouts
+                                        }
+                                    }
+                                }
+                            } else if let error = error {
+                                print("Error: \(error.localizedDescription)")
+                            }
+                        }
+                    } else {
+                        // Authorization already granted or denied, so no need to request again
+                        // You can directly fetch workouts here or handle it accordingly
                         healthKitManager.getWorkouts { workouts, error in
                             if let workouts = workouts {
                                 DispatchQueue.main.async {
@@ -234,8 +241,40 @@ struct ActivityView: View {
                                 }
                             }
                         }
-                    } else if let error = error {
-                        print("Error: \(error.localizedDescription)")
+                    }
+
+                }
+            }
+            .padding(.bottom, 65)
+            .navigationBarTitle("Hello Nisa")
+            .onAppear{
+                // Check if the authorization status is not determined (i.e., user hasn't made a choice yet)
+                if HKHealthStore().authorizationStatus(for: HKObjectType.workoutType()) == .notDetermined {
+                    // Request authorization
+                    healthKitManager.requestAuthorization { success, error in
+                        if success {
+                            healthKitManager.getWorkouts { workouts, error in
+                                if let workouts = workouts {
+                                    DispatchQueue.main.async {
+                                        // Filter the workouts based on activity types
+                                        self.workouts = workouts
+                                    }
+                                }
+                            }
+                        } else if let error = error {
+                            print("Error: \(error.localizedDescription)")
+                        }
+                    }
+                } else {
+                    // Authorization already granted or denied, so no need to request again
+                    // You can directly fetch workouts here or handle it accordingly
+                    healthKitManager.getWorkouts { workouts, error in
+                        if let workouts = workouts {
+                            DispatchQueue.main.async {
+                                // Filter the workouts based on activity types
+                                self.workouts = workouts
+                            }
+                        }
                     }
                 }
                 
@@ -363,5 +402,6 @@ struct ListScoreView: View {
 struct ActivityView_Previews: PreviewProvider {
     static var previews: some View {
         ActivityView()
+            .environmentObject(HealthKitManager())
     }
 }

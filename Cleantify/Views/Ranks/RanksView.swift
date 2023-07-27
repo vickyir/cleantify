@@ -62,7 +62,20 @@ struct RanksView: View {
                                     }
                                 }
                             }
-                        }.padding(.top, 20)
+                        }
+                        .refreshable{
+                            GameKitManager.shared.authenticatePlayer() { success in
+                                if success {
+                                    GameKitManager.shared.fetchPlayerData { cleaners in
+                                        self.cleaners = cleaners
+                //                        Task{
+                //                            await gamekitManager.submitScore(score: 10)
+                //                        }
+                                    }
+                                }
+                            }
+                        }
+                        .padding(.top, 20)
                     }
                 }
             }

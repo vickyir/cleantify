@@ -8,8 +8,9 @@
 import Foundation
 import HealthKit
 
-class HealthKitManager {
+class HealthKitManager: ObservableObject {
     let healthStore = HKHealthStore()
+    @Published var checkPermission : Bool = false
     
     func requestAuthorization(completion: @escaping (Bool, Error?) -> Void) {
         let readTypes: Set<HKObjectType> = [

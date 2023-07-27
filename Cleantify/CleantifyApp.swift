@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct CleantifyApp: App {
+    @StateObject var cleanManager = HealthKitManager()
     var body: some Scene {
         WindowGroup {
             RootView()
                 .preferredColorScheme(.light)
+                .environmentObject(cleanManager)
 //            WorkoutListView()
         }
     }
